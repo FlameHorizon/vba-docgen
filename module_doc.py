@@ -1,4 +1,6 @@
 class ModuleDoc():
+    """Represents markdown document on the module level."""
+
     def __init__(self, name):
         self.name = name
         self.subs = {}

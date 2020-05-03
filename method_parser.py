@@ -1,4 +1,7 @@
 class MethodParser():
+    """Class responsible for parsing VBA methods (both Sub and Function)
+    and turning them into specified markdown format."""
+
     def make(self, code):
         return f'# {self.__get_method_name(code)}\n\n```vb\n{code}\n```'
 

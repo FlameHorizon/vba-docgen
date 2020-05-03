@@ -2,6 +2,9 @@ import module_doc
 
 
 class ModuleParser():
+    """This parser is responsible for extracting information from raw VBA code
+    which later, can be used for generting markdown document."""
+
     def make(self, code):
         lines = code.split('\n')
 
