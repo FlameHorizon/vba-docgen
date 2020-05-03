@@ -1,13 +1,42 @@
-if __name__ == "__main__":
+import os
+import module_parser
+
+
+
+def get_modules(folder_path):
+    output = []
+    for file in os.listdir(folder_path):
+        if file.endswith(".bas"):
+            f = open(folder_path + '\\' + file)
+            output.append(f.read())
+
+    return output
+
+
+def delete_folder_content(folder_path):
     pass
-    # Main has to accept list of files which will be processed
 
-    # Currently, only .bas files should be handled.
 
-    # If output folder was not specified, create docs folder.
+if __name__ == "__main__":
 
-    # If docs folder already exists, remove content of that folder and continue.
+    SOURCE_PATH = 'E:\\root\\software\\repos\\vba-doc-py\\inputs'
+    modules = get_modules(SOURCE_PATH)
 
-    # For each module, one markdown file will be created.
+    OUTPUT_PATH = 'E:\\root\\software\\repos\\vba-doc-py\\output'
+    if os.path.exists(OUTPUT_PATH):
+        delete_folder_content(OUTPUT_PATH)
+    else:
+        os.mkdir(OUTPUT_PATH)
+
+    docs = []
+    for mod in modules:
+        docs.append(module_parser.ModuleParser().make(mod))
+
+    for i in range(0, len(docs)):
+        f = open(f'{OUTPUT_PATH}\\markdown{i}.md', 'w+')
+        f.write(docs[i])
+        f.close()
+
+    pass
 
     # For each public method in module, one markdown file will be created.
