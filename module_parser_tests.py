@@ -104,6 +104,20 @@ class TestModuleParser(unittest.TestCase):
         parser = module_parser.ModuleParser()
         self.assertEqual(expected, parser.make(code))
 
+    def test_MakeReturnsMethodWithDefaultStringComa(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1(Optional ByVal Bar1 As String = ",")\n'
+                'End Sub')
+
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 (String)](./Foo1.md)||\n')
+
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code))
+
 
 if __name__ == "__main__":
     unittest.main()

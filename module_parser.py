@@ -19,7 +19,7 @@ class ModuleParser():
 
             elif 'Public Sub' in ln or 'Public Function' in ln:
                 without_default_values = re.sub(
-                    r' = (\"\w*\"|\w*\.\w*|\w*)', '', ln)
+                    r' = (\"\w*\"|\w*\.\w*|\"\W*\"|\w*)', '', ln)
                 doc.addMethod(self.__get_method_name(without_default_values),
                               self.__get_args(without_default_values))
 
