@@ -1,3 +1,4 @@
+import re
 import module_doc
 
 
@@ -17,7 +18,10 @@ class ModuleParser():
                 doc = module_doc.ModuleDoc(name)
 
             elif 'Public Sub' in ln or 'Public Function' in ln:
-                doc.addMethod(self.__get_method_name(ln), self.__get_args(ln))
+                without_default_values = re.sub(
+                    r' = (\"\w*\"|\w*\.\w*|\w*)', '', ln)
+                doc.addMethod(self.__get_method_name(without_default_values),
+                              self.__get_args(without_default_values))
 
         return doc.build()
 

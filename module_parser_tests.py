@@ -62,6 +62,48 @@ class TestModuleParser(unittest.TestCase):
         parser = module_parser.ModuleParser()
         self.assertEqual(expected, parser.make(code))
 
+    def test_MakeReturnsMethodWithDefaultNumeric(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1(Optional ByVal Bar1 As Long = 123)\n'
+                'End Sub')
+
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 (Long)](./Foo1.md)||\n')
+
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code))
+
+    def test_MakeReturnsMethodWithDefaultString(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1(Optional ByVal Bar1 As String = "abc")\n'
+                'End Sub')
+
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 (String)](./Foo1.md)||\n')
+
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code))
+
+    def test_MakeReturnsMethodWithDefaultEnumValue(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1(Optional ByVal Bar1 As Operation = Operation.Stop)\n'
+                'End Sub')
+
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 (Operation)](./Foo1.md)||\n')
+
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code))
+
 
 if __name__ == "__main__":
     unittest.main()
