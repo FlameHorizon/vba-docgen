@@ -13,8 +13,8 @@ class TestModuleDoc(unittest.TestCase):
     def test_addMethod(self):
         doc = ModuleDoc('example')
         doc.addMethod('Test', ['String'])
-        self.assertTrue('Test' in doc.subs)
-        self.assertEqual(['String'], doc.subs['Test'])
+        self.assertTrue('Test' in doc.methods)
+        self.assertEqual(['String'], doc.methods['Test'])
 
     def test_buildReturnsSubDeclaration(self):
         doc = ModuleDoc('example')
