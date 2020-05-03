@@ -10,4 +10,4 @@ if __name__ == "__main__":
 
     # For each module, one markdown file will be created.
 
-    # For each public method in module, one markdown fiel will be created.
+    # For each public method in module, one markdown file will be created.

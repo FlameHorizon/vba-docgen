@@ -16,13 +16,13 @@ class TestModuleParser(unittest.TestCase):
                 'Public Function Foo2() As String\n'
                 'End Function')
 
-        exptected = ('# Example module\n\n'
+        expected = ('# Example module\n\n'
                      '# Methods\n\n'
                      '|Name|Description|\n'
                      '|-|-|\n'
                      '|[Foo1 ()](./Foo1.md)||\n'
                      '|[Foo2 ()](./Foo2.md)||\n')
-        self.assertEqual(exptected, parser.make(code))
+        self.assertEqual(expected, parser.make(code))
 
     def test_MakeReturnsMethosWithArgs(self):
         code = ('Attribute VB_Name = \"Example\"\n'
