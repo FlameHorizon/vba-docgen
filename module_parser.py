@@ -12,7 +12,7 @@ class ModuleParser():
         lines = code.replace(' _\n', '').split('\n')
 
         for ln in lines:
-            if 'Attribute VB_Name' in ln:
+            if 'Attribute VB_Name = "' in ln:
                 dbl_qut = ln.index('\"') + 1
                 name = ln[dbl_qut: ln.rindex('\"')]
                 doc = module_doc.ModuleDoc(name)
