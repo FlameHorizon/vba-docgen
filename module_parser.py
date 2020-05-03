@@ -6,7 +6,9 @@ class ModuleParser():
     which later, can be used for generating markdown document."""
 
     def make(self, code):
-        lines = code.split('\n')
+        # Removes line continuation symbols from declarations
+        # to make parsing easier.
+        lines = code.replace(' _\n', '').split('\n')
 
         for ln in lines:
             if 'Attribute VB_Name' in ln:

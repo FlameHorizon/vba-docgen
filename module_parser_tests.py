@@ -17,14 +17,14 @@ class TestModuleParser(unittest.TestCase):
                 'End Function')
 
         expected = ('# Example module\n\n'
-                     '# Methods\n\n'
-                     '|Name|Description|\n'
-                     '|-|-|\n'
-                     '|[Foo1 ()](./Foo1.md)||\n'
-                     '|[Foo2 ()](./Foo2.md)||\n')
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 ()](./Foo1.md)||\n'
+                    '|[Foo2 ()](./Foo2.md)||\n')
         self.assertEqual(expected, parser.make(code))
 
-    def test_MakeReturnsMethosWithArgs(self):
+    def test_MakeReturnsMethodsWithArgs(self):
         code = ('Attribute VB_Name = \"Example\"\n'
                 'Public Sub Foo1(ByVal Account As String)\n'
                 'End Sub\n'
@@ -43,6 +43,21 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo2 (Date, String)](./Foo2.md)||\n'
                     '|[Foo3 (Variant())](./Foo3.md)||\n'
                     '|[Foo4 (VBA.Collection)](./Foo4.md)||\n')
+
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code))
+
+    def test_MakeReturnsMethodWithLineContinuationSymbol(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1(ByVal Bar1 As String, _\n'
+                '                ByVal Bar2 As String)\n'
+                'End Sub')
+
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 (String, String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
         self.assertEqual(expected, parser.make(code))
