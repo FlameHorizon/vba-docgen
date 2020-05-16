@@ -10,11 +10,16 @@ class TestModuleDoc(unittest.TestCase):
         doc = ModuleDoc('example')
         self.assertEqual('# example module\n\n', doc.build())
 
+    def test_buildReturnsDocumentWithDescription(self):
+        doc = ModuleDoc('example', 'This is a module description')
+        self.assertEqual('# example module\n\nThis is a module description\n\n', doc.build())
+
     def test_addMethod(self):
         doc = ModuleDoc('example')
-        doc.addMethod('Test', ['String'])
+        doc.addMethod('Test', ['String'], 'Test description')
         self.assertTrue('Test' in doc.methods)
-        self.assertEqual(['String'], doc.methods['Test'])
+        self.assertEqual(['String'], doc.methods['Test'][0])
+        self.assertEqual('Test description', doc.methods['Test'][1])
 
     def test_buildReturnsSubDeclaration(self):
         doc = ModuleDoc('example')
@@ -66,6 +71,18 @@ class TestModuleDoc(unittest.TestCase):
                     '|-|-|\n'
                     '|[Start ()](./Start.md)||\n'
                     '|[Finish ()](./Finish.md)||\n')
+
+        self.assertEqual(expected, doc.build())
+
+    def test_buildReturnsValueWhenDescriptionAvailable(self):
+        doc = ModuleDoc('example')
+        doc.addMethod('Foo', '', 'This is example method description')
+
+        expected = ('# example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo ()](./Foo.md)|This is example method description|\n')
 
         self.assertEqual(expected, doc.build())
 

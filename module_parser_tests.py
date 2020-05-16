@@ -118,6 +118,38 @@ class TestModuleParser(unittest.TestCase):
         parser = module_parser.ModuleParser()
         self.assertEqual(expected, parser.make(code))
 
+    def test_MakeReturnsModuleWithDescription(self):
+        code = ('Attribute VB_Name = \"Example\"')
+        
+        descriptions = {'Example': 'Sample description of a module'}
+        
+        expected = ('# Example module\n\n'
+                    'Sample description of a module\n\n')
+                    
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code, descriptions))
+
+    def test_MakeReturnsMethodWithDescription(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1()\n'
+                'End Sub\n'
+                'Public Sub Foo2(ByVal Bar As Boolean)\n'
+                'End Sub\n')
+        
+        descriptions = {'Example.Foo1 ()': 'Foo1 description',
+                        'Example.Foo2 (Boolean)': 'Foo2 description'}
+        
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|-|-|\n'
+                    '|[Foo1 ()](./Foo1.md)|Foo1 description|\n'
+                    '|[Foo2 (Boolean)](./Foo2.md)|Foo2 description|\n')
+                    
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code, descriptions))
+
+    
 
 if __name__ == "__main__":
     unittest.main()
