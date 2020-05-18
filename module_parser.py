@@ -27,7 +27,7 @@ class ModuleParser():
                 formatted = self.__format_args(args)
                 key = mod_name + '.' + meth_name + f' ({formatted})'
                 if (key in descriptions):
-                    doc.addMethod(meth_name, args, descriptions[key])
+                    doc.addMethod(meth_name, args, descriptions[key]['short-description'])
                 else:
                     doc.addMethod(meth_name, args)
 
@@ -43,6 +43,7 @@ class ModuleParser():
         name_start = len(f'Public {method_type} ')
         open_parenthesis = ln.index('(')
         return ln[name_start:open_parenthesis]
+
 
     def __get_args(self, ln):
         ln = self.__remove_defaults(ln)

@@ -1,6 +1,7 @@
 import os
-import module_parser
 import json
+import module_parser
+import method_parser
 
 def get_modules(folder_path):
     output = []
@@ -33,6 +34,11 @@ if __name__ == "__main__":
     docs = []
     for mod in modules:
         docs.append(module_parser.ModuleParser().make(mod, descriptions))
+
+        doc_list = method_parser.MethodParser().make(mod, descriptions)
+        if (len(doc_list) > 0):
+            for item in doc_list:
+                docs.append(item.build())
 
     for i in range(0, len(docs)):
         f = open(f'{OUTPUT_PATH}\\markdown{i}.md', 'w+')
