@@ -6,7 +6,7 @@ class TestModuleParser(unittest.TestCase):
     def test_DetectModuleName(self):
         parser = module_parser.ModuleParser()
         code = 'Attribute VB_Name = \"Example\"'
-        self.assertEqual('# Example module\n\n', parser.make(code))
+        self.assertEqual('# Example module\n\n', parser.make(code).build())
 
     def test_MakeReturnsPublicMethods(self):
         parser = module_parser.ModuleParser()
@@ -22,7 +22,7 @@ class TestModuleParser(unittest.TestCase):
                     '|-|-|\n'
                     '|[Foo1 ()](./Foo1.md)||\n'
                     '|[Foo2 ()](./Foo2.md)||\n')
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsMethodsWithArgs(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -45,7 +45,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo4 (VBA.Collection)](./Foo4.md)||\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsMethodWithLineContinuationSymbol(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -60,7 +60,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo1 (String, String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsMethodWithDefaultNumeric(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -74,7 +74,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo1 (Long)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsMethodWithDefaultString(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -88,7 +88,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo1 (String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsMethodWithDefaultEnumValue(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -102,7 +102,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo1 (Operation)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsMethodWithDefaultStringComa(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -116,7 +116,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo1 (String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code))
+        self.assertEqual(expected, parser.make(code).build())
 
     def test_MakeReturnsModuleWithDescription(self):
         code = ('Attribute VB_Name = \"Example\"')
@@ -127,7 +127,7 @@ class TestModuleParser(unittest.TestCase):
                     'Sample description of a module\n\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code, descriptions))
+        self.assertEqual(expected, parser.make(code, descriptions).build())
 
     def test_MakeReturnsMethodWithDescription(self):
         code = ('Attribute VB_Name = \"Example\"\n'
@@ -147,7 +147,7 @@ class TestModuleParser(unittest.TestCase):
                     '|[Foo2 (Boolean)](./Foo2.md)|Foo2 description|\n')
 
         parser = module_parser.ModuleParser()
-        self.assertEqual(expected, parser.make(code, descriptions))
+        self.assertEqual(expected, parser.make(code, descriptions).build())
 
 
 if __name__ == "__main__":

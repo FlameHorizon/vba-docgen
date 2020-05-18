@@ -19,6 +19,12 @@ class MethodDoc():
     def set_example(self, value):
         self.__example = value
 
+    def get_namespace(self):
+        return self.__namespace
+
+    def get_method_sig(self):
+        return self.__method_sig
+
     def build(self):
         output = ''
         output = f'# {self.__namespace}.{self.__method_sig} Method\n\n'

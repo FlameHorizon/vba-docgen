@@ -4,7 +4,7 @@ from module_doc import ModuleDoc
 
 class TestModuleDoc(unittest.TestCase):
     def test_init(self):
-        self.assertEqual(ModuleDoc('example').name, 'example')
+        self.assertEqual(ModuleDoc('example').namespace, 'example')
 
     def test_buildReturnsDocumentWithName(self):
         doc = ModuleDoc('example')

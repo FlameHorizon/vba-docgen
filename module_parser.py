@@ -31,7 +31,7 @@ class ModuleParser():
                 else:
                     doc.addMethod(meth_name, args)
 
-        return doc.build()
+        return doc
 
     def __get_mod_name(self, ln):
         dbl_qut = ln.index('\"') + 1

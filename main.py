@@ -32,19 +32,24 @@ if __name__ == "__main__":
         descriptions = json.load(f)
     
     docs = []
+
     for mod in modules:
-        docs.append(module_parser.ModuleParser().make(mod, descriptions))
-
-        doc_list = method_parser.MethodParser().make(mod, descriptions)
-        if (len(doc_list) > 0):
-            for item in doc_list:
-                docs.append(item.build())
-
-    for i in range(0, len(docs)):
-        f = open(f'{OUTPUT_PATH}\\markdown{i}.md', 'w+')
-        f.write(docs[i])
+        mod_doc = module_parser.ModuleParser().make(mod, descriptions)
+        dir_name = mod_doc.namespace
+        if (os.path.exists(f'{OUTPUT_PATH}\\{dir_name}')) == False:
+            os.mkdir(f'{OUTPUT_PATH}\\{dir_name}')
+        
+        f = open(f'{OUTPUT_PATH}\\{dir_name}\\{dir_name}.md', 'w+')
+        f.write(mod_doc.build())
         f.close()
 
-    pass
-
-    # For each public method in module, one markdown file will be created.
+    for mod in modules:
+        meth_docs = method_parser.MethodParser().make(mod, descriptions)
+        for meth_doc in meth_docs:
+            dir_name = meth_doc.get_namespace()
+            meth_name = meth_doc.get_method_sig()
+        
+            f = open(f'{OUTPUT_PATH}\\{dir_name}\\{meth_name}.md', 'w+')
+            f.write(meth_doc.build())
+            f.close()
+            
