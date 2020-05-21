@@ -8,13 +8,13 @@ class MethodParser():
 
     def make(self, code, descriptions={}):
 
-        # Format code such that line continuations symbols and 
+        # Format code such that line continuations symbols and
         # multiple spaces will be removed.
         #lines = code.replace(' _\n', '')
         lines = re.sub(' _\n +', '', code)
         lines = re.sub('\,(?=\w)', ', ', lines)
         lines = lines.split('\n')
-        
+
         output = []
 
         for ln in lines:
@@ -24,14 +24,14 @@ class MethodParser():
             elif 'Public Sub' in ln or 'Public Function' in ln:
                 meth_name = self.__get_method_name(ln)
                 doc = method_doc.MethodDoc(mod_name, meth_name)
-                
+
                 args = self.__get_args(ln)
                 formatted = self.__format_args(list(args.values()))
                 unique_sig = mod_name + '.' + meth_name + f' ({formatted})'
 
                 # If signature does not exists in the documentation, it means
                 # user have to created a documentation for this method yet.
-                # Skip line and move to next method. 
+                # Skip line and move to next method.
                 if (unique_sig not in descriptions):
                     continue
 
@@ -41,10 +41,12 @@ class MethodParser():
                 doc.set_signature(ln)
 
                 for name in args:
-                    doc.add_parameter(name, args[name], json_doc['parameters'][name])
+                    doc.add_parameter(
+                        name, args[name], json_doc['parameters'][name])
 
                 if 'Public Function' in ln:
-                    doc.add_returns(json_doc['returns'][0],json_doc['returns'][1])
+                    doc.add_returns(json_doc['returns']
+                                    [0], json_doc['returns'][1])
 
                 # Insert Errors section only if it was defined by user.
                 if ('errors' in json_doc):
@@ -78,7 +80,10 @@ class MethodParser():
         output = {}
         ln = self.__remove_defaults(ln)
         open_parentheses = ln.index('(')
-        close_parentheses = ln.rindex(')')
+        if (' Function ' in ln):
+            close_parentheses = ln.rfind(')', 0, ln.rindex(' As '))
+        else:
+            close_parentheses = ln.rindex(')')
 
         if self.__no_args(open_parentheses, close_parentheses):
             return output
@@ -92,9 +97,15 @@ class MethodParser():
             if (words[0] == 'Optional'):
                 arg_name = words[2]
                 arg_type = words[4]
+
+            elif (words[0] == 'ParamArray'):
+                arg_name = words[1].replace('(', '').replace(')', '')
+                arg_type = 'ParamArray ' + words[3]
+
             else:
                 arg_name = words[1]
                 arg_type = words[3]
+
             output.update({arg_name: arg_type})
 
         return output
