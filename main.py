@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import module_parser
 import method_parser
@@ -20,16 +21,18 @@ def delete_folder_content(folder_path):
 
 if __name__ == "__main__":
 
-    SOURCE_PATH = 'E:\\root\\software\\repos\\private\\Lapis\\src'
-    modules = get_modules(SOURCE_PATH)
+    src = sys.argv[1]
+    dest = sys.argv[2]
+    doc = sys.argv[3]
 
-    OUTPUT_PATH = 'E:\\root\\software\\repos\\private\\vba-doc-py\\output'
-    if os.path.exists(OUTPUT_PATH):
-        delete_folder_content(OUTPUT_PATH)
+    modules = get_modules(src)
+    
+    if os.path.exists(dest):
+        delete_folder_content(dest)
     else:
-        os.mkdir(OUTPUT_PATH)
+        os.mkdir(dest)
 
-    with open('docs-def.json') as f:
+    with open(doc) as f:
         descriptions = json.load(f)
 
     docs = []
@@ -37,10 +40,10 @@ if __name__ == "__main__":
     for mod in modules:
         mod_doc = module_parser.ModuleParser().make(mod, descriptions)
         dir_name = mod_doc.namespace
-        if (os.path.exists(f'{OUTPUT_PATH}\\{dir_name}')) == False:
-            os.mkdir(f'{OUTPUT_PATH}\\{dir_name}')
+        if (os.path.exists(f'{dest}\\{dir_name}')) == False:
+            os.mkdir(f'{dest}\\{dir_name}')
 
-        f = open(f'{OUTPUT_PATH}\\{dir_name}\\{dir_name}.md', 'w+')
+        f = open(f'{dest}\\{dir_name}\\{dir_name}.md', 'w+')
         f.write(mod_doc.build())
         f.close()
 
@@ -50,6 +53,6 @@ if __name__ == "__main__":
             dir_name = meth_doc.get_namespace()
             meth_name = meth_doc.get_method_sig()
 
-            f = open(f'{OUTPUT_PATH}\\{dir_name}\\{meth_name}.md', 'w+')
+            f = open(f'{dest}\\{dir_name}\\{meth_name}.md', 'w+')
             f.write(meth_doc.build())
             f.close()

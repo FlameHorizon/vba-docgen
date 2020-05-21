@@ -71,9 +71,8 @@ class MethodParser():
         name_start = len(f'Public {method_type} ')
         open_parenthesis = ln.index('(')
         return ln[name_start:open_parenthesis]
-
-
-   def __get_args(self, ln):
+    
+    def __get_args(self, ln):
         """
             Returns dictionary where key is a name of parameter
             and value is parameter type.
