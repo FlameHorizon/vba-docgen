@@ -156,8 +156,9 @@ class TestMethodDoc(unittest.TestCase):
         doc.set_description('Description of Foo.Bar')
         doc.set_signature('Public Sub Bar ()')
         doc.set_example('This is an example.')
-        
+
         self.assertEqual(expected, doc.build())
+
 
 if __name__ == "__main__":
     unittest.main()

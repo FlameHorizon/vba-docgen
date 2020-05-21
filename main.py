@@ -3,6 +3,7 @@ import json
 import module_parser
 import method_parser
 
+
 def get_modules(folder_path):
     output = []
     for file in os.listdir(folder_path):
@@ -27,10 +28,10 @@ if __name__ == "__main__":
         delete_folder_content(OUTPUT_PATH)
     else:
         os.mkdir(OUTPUT_PATH)
-    
-    with open ('docs-def.json') as f: 
+
+    with open('docs-def.json') as f:
         descriptions = json.load(f)
-    
+
     docs = []
 
     for mod in modules:
@@ -38,7 +39,7 @@ if __name__ == "__main__":
         dir_name = mod_doc.namespace
         if (os.path.exists(f'{OUTPUT_PATH}\\{dir_name}')) == False:
             os.mkdir(f'{OUTPUT_PATH}\\{dir_name}')
-        
+
         f = open(f'{OUTPUT_PATH}\\{dir_name}\\{dir_name}.md', 'w+')
         f.write(mod_doc.build())
         f.close()
@@ -48,8 +49,7 @@ if __name__ == "__main__":
         for meth_doc in meth_docs:
             dir_name = meth_doc.get_namespace()
             meth_name = meth_doc.get_method_sig()
-        
+
             f = open(f'{OUTPUT_PATH}\\{dir_name}\\{meth_name}.md', 'w+')
             f.write(meth_doc.build())
             f.close()
-            

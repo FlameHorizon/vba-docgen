@@ -1,7 +1,7 @@
 class ModuleDoc():
     """Represents markdown document on the module level."""
 
-    def __init__(self, namespace, description = ''):
+    def __init__(self, namespace, description=''):
         self.namespace = namespace
         self.methods = {}
         self.description = description
@@ -9,7 +9,8 @@ class ModuleDoc():
     def build(self):
         output = ('# ' + self.namespace + ' module\n\n')
         if (self.description != ''):
-            output = ('# ' + self.namespace + ' module\n\n' + self.description + '\n\n')
+            output = ('# ' + self.namespace + ' module\n\n' +
+                      self.description + '\n\n')
 
         if len(self.methods) > 0:
             output += ('# Methods\n\n'
@@ -29,5 +30,5 @@ class ModuleDoc():
         else:
             return args
 
-    def addMethod(self, name, args, desc = ''):
+    def addMethod(self, name, args, desc=''):
         self.methods.update({name: [args, desc]})

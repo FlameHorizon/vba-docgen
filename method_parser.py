@@ -10,7 +10,7 @@ class MethodParser():
 
         # Format code such that line continuations symbols and
         # multiple spaces will be removed.
-        #lines = code.replace(' _\n', '')
+        # lines = code.replace(' _\n', '')
         lines = re.sub(' _\n +', '', code)
         lines = re.sub('\,(?=\w)', ', ', lines)
         lines = lines.split('\n')
@@ -72,9 +72,10 @@ class MethodParser():
         open_parenthesis = ln.index('(')
         return ln[name_start:open_parenthesis]
 
-    def __get_args(self, ln):
-        """ 
-            Returns dictionary where key is a name of parameter 
+
+   def __get_args(self, ln):
+        """
+            Returns dictionary where key is a name of parameter
             and value is parameter type.
         """
         output = {}

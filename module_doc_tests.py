@@ -12,7 +12,8 @@ class TestModuleDoc(unittest.TestCase):
 
     def test_buildReturnsDocumentWithDescription(self):
         doc = ModuleDoc('example', 'This is a module description')
-        self.assertEqual('# example module\n\nThis is a module description\n\n', doc.build())
+        self.assertEqual(
+            '# example module\n\nThis is a module description\n\n', doc.build())
 
     def test_addMethod(self):
         doc = ModuleDoc('example')
