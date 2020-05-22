@@ -252,6 +252,24 @@ class TestModuleDoc(unittest.TestCase):
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
 
+    def test_makeReturnsDocumentWithRemarks(self):
+        desc = {'Foo.Bar ()': {'description': 'Test description',
+                               'remarks': 'Test remarks'}}
+
+        code = ('Attribute VB_Name = \"Foo\"\n'
+                'Public Sub Bar()')
+
+        expected = ('# Foo.Bar Method\n\n'
+                    'Test description\n\n'
+                    '```vb\n'
+                    'Public Sub Bar()\n'
+                    '```\n\n'
+                    '### Remarks\n\n'
+                    'Test remarks\n')
+
+        actual = method_parser.MethodParser().make(code, desc)[0].build()
+        self.assertEqual(expected, actual)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -159,6 +159,14 @@ class TestMethodDoc(unittest.TestCase):
 
         self.assertEqual(expected, doc.build())
 
+    def test_buildReturnDocWithRemarks(self):
+        expected = ('# Foo.Bar () Method\n\n'
+                    '### Remarks\n\n'
+                    'This is an example.')
+        
+        doc = MethodDoc('Foo', 'Bar ()')
+        doc.set_example('This is an example.')
+
 
 if __name__ == "__main__":
     unittest.main()

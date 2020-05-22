@@ -57,6 +57,9 @@ class MethodParser():
                 if ('example' in json_doc):
                     doc.set_example(json_doc['example'])
 
+                if ('remarks' in json_doc):
+                    doc.set_remarks(json_doc['remarks'])
+
                 output.append(doc)
 
         return output

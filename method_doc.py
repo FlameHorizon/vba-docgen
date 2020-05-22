@@ -9,6 +9,7 @@ class MethodDoc():
         self.__return_description = ''
         self.__errors = {}
         self.__example = ''
+        self.__remarks = ''
 
     def set_description(self, value):
         self.__description = value
@@ -18,6 +19,9 @@ class MethodDoc():
 
     def set_example(self, value):
         self.__example = value
+
+    def set_remarks(self, value):
+        self.__remarks = value
 
     def get_namespace(self):
         return self.__namespace
@@ -62,6 +66,9 @@ class MethodDoc():
         if self.__example:
             output += '## Examples\n\n'
             output += self.__example
+
+        if self.__remarks:
+            output += f'### Remarks\n\n{self.__remarks}\n'
 
         return output
 
