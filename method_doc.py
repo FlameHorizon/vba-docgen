@@ -64,8 +64,7 @@ class MethodDoc():
                     output += f'{self.__errors[name]}\n\n'
 
         if self.__example:
-            output += '## Examples\n\n'
-            output += self.__example
+            output += f'## Examples\n\n{self.__example}\n\n'
 
         if self.__remarks:
             output += f'### Remarks\n\n{self.__remarks}\n'
