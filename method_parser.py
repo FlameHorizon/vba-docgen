@@ -1,5 +1,6 @@
 import re
 import method_doc
+import code_parser
 
 
 class MethodParser():
@@ -10,9 +11,7 @@ class MethodParser():
 
         # Format code such that line continuations symbols and
         # multiple spaces will be removed.
-        # lines = code.replace(' _\n', '')
-        lines = re.sub(' _\n +', '', code)
-        lines = re.sub('\,(?=\w)', ', ', lines)
+        lines = code_parser.remove_continuations_symbols(code)
         lines = lines.split('\n')
 
         output = []
@@ -74,53 +73,16 @@ class MethodParser():
         name_start = len(f'Public {method_type} ')
         open_parenthesis = ln.index('(')
         return ln[name_start:open_parenthesis]
-    
+
     def __get_args(self, ln):
         """
             Returns dictionary where key is a name of parameter
             and value is parameter type.
         """
-        output = {}
-        ln = self.__remove_defaults(ln)
-        open_parentheses = ln.index('(')
-        if (' Function ' in ln):
-            close_parentheses = ln.rfind(')', 0, ln.rindex(' As '))
-        else:
-            close_parentheses = ln.rindex(')')
-
-        if self.__no_args(open_parentheses, close_parentheses):
-            return output
-
-        # Remove surrounding parenthesis
-        args = ln[open_parentheses + 1: close_parentheses]
-        args_list = args.split(', ')
-
-        for item in args_list:
-            words = item.split(' ')
-            if (words[0] == 'Optional'):
-                arg_name = words[2]
-                arg_type = words[4]
-
-            elif (words[0] == 'ParamArray'):
-                arg_name = words[1].replace('(', '').replace(')', '')
-                arg_type = 'ParamArray ' + words[3]
-
-            else:
-                arg_name = words[1]
-                arg_type = words[3]
-
-            output.update({arg_name: arg_type})
-
-        return output
-
-    def __remove_defaults(self, ln):
-        return re.sub(r' = (\"\w*\"|\w*\.\w*|\"\W*\"|\w*)', '', ln)
+        return code_parser.get_args(ln)
 
     def __format_args(self, args):
         if isinstance(args, list):
             return ', '.join(args)
         else:
             return args
-
-    def __no_args(self, open_parentheses, close_parentheses):
-        return open_parentheses + 1 == close_parentheses

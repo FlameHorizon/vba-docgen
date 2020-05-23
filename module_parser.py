@@ -1,5 +1,6 @@
 import re
 import module_doc
+import code_parser
 
 
 class ModuleParser():
@@ -10,7 +11,7 @@ class ModuleParser():
         """If code does not contains methods definitions, methods section will not be created."""
         # Removes line continuation symbols from declarations
         # to make parsing easier.
-        lines = code.replace(' _\n', '').split('\n')
+        lines = code_parser.remove_continuations_symbols(code).split('\n')
 
         for ln in lines:
             if 'Attribute VB_Name = "' in ln:
@@ -23,11 +24,13 @@ class ModuleParser():
 
             elif 'Public Sub' in ln or 'Public Function' in ln:
                 meth_name = self.__get_method_name(ln)
+
                 args = self.__get_args(ln)
-                formatted = self.__format_args(args)
+                formatted = self.__format_args(list(args.values()))
                 key = mod_name + '.' + meth_name + f' ({formatted})'
                 if (key in descriptions):
-                    doc.addMethod(meth_name, args, descriptions[key]['short-description'])
+                    doc.addMethod(meth_name, args,
+                                  descriptions[key]['short-description'])
                 else:
                     doc.addMethod(meth_name, args)
 
@@ -44,28 +47,8 @@ class ModuleParser():
         open_parenthesis = ln.index('(')
         return ln[name_start:open_parenthesis]
 
-
     def __get_args(self, ln):
-        ln = self.__remove_defaults(ln)
-        open_parentheses = ln.index('(')
-        close_parentheses = ln.rindex(')')
-
-        if self.__no_args(open_parentheses, close_parentheses):
-            return ''
-
-        # Remove surrounding parenthesis
-        args = ln[open_parentheses + 1: close_parentheses]
-
-        args_list = args.split(', ')
-        output = []
-
-        AS_KEYWORD = ' As '
-        for item in args_list:
-            as_keyword_start = item.index(AS_KEYWORD)
-            arg_type = item[as_keyword_start + len(AS_KEYWORD):]
-            output.append(arg_type)
-
-        return output
+        return code_parser.get_args(ln)
 
     def __remove_defaults(self, ln):
         return re.sub(r' = (\"\w*\"|\w*\.\w*|\"\W*\"|\w*)', '', ln)

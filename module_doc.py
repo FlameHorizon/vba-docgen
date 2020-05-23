@@ -18,7 +18,13 @@ class ModuleDoc():
                        '|-|-|\n')
 
             for name in self.methods:
-                args = self.__format_args(self.methods[name][0])
+                # No args defined for this method.
+                if self.methods[name][0] == '':
+                    args = ''
+                else:
+                    args = self.__format_args(
+                        list(self.methods[name][0].values()))
+
                 desc = self.methods[name][1]
                 output += f'|[{name} ({args})](./{name}.md)|{desc}|\n'
 

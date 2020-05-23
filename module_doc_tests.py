@@ -17,14 +17,14 @@ class TestModuleDoc(unittest.TestCase):
 
     def test_addMethod(self):
         doc = ModuleDoc('example')
-        doc.addMethod('Test', ['String'], 'Test description')
+        doc.addMethod('Test', {'Foo': 'String'}, 'Test description')
         self.assertTrue('Test' in doc.methods)
-        self.assertEqual(['String'], doc.methods['Test'][0])
+        self.assertEqual(['String'], list(doc.methods['Test'][0].values()))
         self.assertEqual('Test description', doc.methods['Test'][1])
 
     def test_buildReturnsSubDeclaration(self):
         doc = ModuleDoc('example')
-        doc.addMethod("Start", '')
+        doc.addMethod("Start", {})
 
         expected = ('# example module\n\n'
                     '# Methods\n\n'
@@ -37,7 +37,7 @@ class TestModuleDoc(unittest.TestCase):
 
     def test_buildReturnsSubDeclarationWithArg(self):
         doc = ModuleDoc('example')
-        doc.addMethod('Start', 'String')
+        doc.addMethod('Start', {'Foo': 'String'})
 
         expected = ('# example module\n\n'
                     '# Methods\n\n'
@@ -50,7 +50,7 @@ class TestModuleDoc(unittest.TestCase):
 
     def test_buildReturnsSubDeclarationWithArgs(self):
         doc = ModuleDoc('example')
-        doc.addMethod('Start', ['String', 'Long'])
+        doc.addMethod('Start', {'Foo1': 'String', 'Foo2': 'Long'})
 
         expected = ('# example module\n\n'
                     '# Methods\n\n'
@@ -63,8 +63,8 @@ class TestModuleDoc(unittest.TestCase):
 
     def test_buildReturnsValueWhenManyDeclarations(self):
         doc = ModuleDoc('example')
-        doc.addMethod('Start', '')
-        doc.addMethod('Finish', '')
+        doc.addMethod('Start', {})
+        doc.addMethod('Finish', {})
 
         expected = ('# example module\n\n'
                     '# Methods\n\n'
@@ -77,7 +77,7 @@ class TestModuleDoc(unittest.TestCase):
 
     def test_buildReturnsValueWhenDescriptionAvailable(self):
         doc = ModuleDoc('example')
-        doc.addMethod('Foo', '', 'This is example method description')
+        doc.addMethod('Foo', {}, 'This is example method description')
 
         expected = ('# example module\n\n'
                     '# Methods\n\n'
