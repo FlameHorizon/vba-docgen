@@ -131,7 +131,6 @@ class TestMethodDoc(unittest.TestCase):
                     '### Errors\n\n'
                     '`OnInvalidArgumentError` <br>\n'
                     'Description of error\n\n'
-                    '-or-\n\n'
                     '`OnArgumentOutOfRangeError` <br>\n'
                     'Description of error\n\n')
 
@@ -150,7 +149,7 @@ class TestMethodDoc(unittest.TestCase):
                     'Public Sub Bar ()\n'
                     '```\n\n'
                     '## Examples\n\n'
-                    'This is an example.')
+                    'This is an example.\n\n')
 
         doc = MethodDoc('Foo', 'Bar ()')
         doc.set_description('Description of Foo.Bar')
@@ -163,7 +162,7 @@ class TestMethodDoc(unittest.TestCase):
         expected = ('# Foo.Bar () Method\n\n'
                     '### Remarks\n\n'
                     'This is an example.')
-        
+
         doc = MethodDoc('Foo', 'Bar ()')
         doc.set_example('This is an example.')
 

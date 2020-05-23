@@ -52,16 +52,15 @@ class MethodDoc():
 
         if self.__errors:
             output += '### Errors\n\n'
-            value_key = list(self.__errors)[0]
-            output += f'`{value_key}` <br>\n'
-            output += f'{self.__errors[value_key]}\n\n'
+            for err in self.__errors:
+                descriptions = self.__errors[err]
+                desc = descriptions.pop(0)
+                output += f'`{err}` <br>\n{desc}\n\n'
 
-            if (len(self.__errors) > 1):
-                self.__errors.pop(list(self.__errors.keys())[0])
-                for name in self.__errors:
-                    output += '-or-\n\n'
-                    output += f'`{name}` <br>\n'
-                    output += f'{self.__errors[name]}\n\n'
+                # If there are multiple descriptions for a particular error
+                # here, attach them to the document with -or- separator.
+                for desc in descriptions:
+                    output += f'-or-\n\n{desc}\n\n'
 
         if self.__example:
             output += f'## Examples\n\n{self.__example}\n\n'
@@ -79,4 +78,7 @@ class MethodDoc():
         self.__return_description = description
 
     def add_error(self, name, description):
-        self.__errors.update({name: description})
+        if (name in self.__errors):
+            self.__errors[name].append(description)
+        else:
+            self.__errors.update({name: [description]})

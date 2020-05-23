@@ -16,7 +16,7 @@ class TestModuleDoc(unittest.TestCase):
                     'Public Sub Bar()\n'
                     '```\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -38,7 +38,7 @@ class TestModuleDoc(unittest.TestCase):
                     '**Arg1** `String` <br>\n'
                     'Test Arg1 description\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -66,7 +66,7 @@ class TestModuleDoc(unittest.TestCase):
                     '**Arg3** `Variant` <br>\n'
                     'Test Arg3 description\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -88,7 +88,7 @@ class TestModuleDoc(unittest.TestCase):
                     '`String` <br>\n'
                     'Test returns\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
 
@@ -110,9 +110,32 @@ class TestModuleDoc(unittest.TestCase):
                     '### Errors\n\n'
                     '`OnInvalidArgumentError` <br>\n'
                     'Test OnInvalidArgumentError\n\n'
-                    '-or-\n\n'
                     '`OnNotImplementedError` <br>\n'
                     'Test OnNotImplementedError\n\n')
+
+        actual = method_parser.MethodParser().make(code, desc)[0].build()
+        self.assertEqual(expected, actual)
+
+    def test_makeReturnsSubWithTwoSameErrors(self):
+        desc = {'Foo.Bar ()': {'description': 'Test description',
+                               'errors': [
+                                   ['OnInvalidArgumentError',
+                                       'Test OnInvalidArgumentError'],
+                                   ['OnInvalidArgumentError', 'Test2 OnInvalidArgumentError']]}}
+        code = ('Attribute VB_Name = \"Foo\"\n'
+                'Public Sub Bar()\n\n'
+                'End Sub')
+
+        expected = ('# Foo.Bar Method\n\n'
+                    'Test description\n\n'
+                    '```vb\n'
+                    'Public Sub Bar()\n'
+                    '```\n\n'
+                    '### Errors\n\n'
+                    '`OnInvalidArgumentError` <br>\n'
+                    'Test OnInvalidArgumentError\n\n'
+                    '-or-\n\n'
+                    'Test2 OnInvalidArgumentError\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -152,7 +175,7 @@ class TestModuleDoc(unittest.TestCase):
                     '**Arg3** `Variant` <br>\n'
                     'Test Arg3 description\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -174,7 +197,7 @@ class TestModuleDoc(unittest.TestCase):
                     '**Arg** `ParamArray Variant` <br>\n'
                     'Test Arg description\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -199,7 +222,7 @@ class TestModuleDoc(unittest.TestCase):
                     '**Arg2** `ParamArray Variant` <br>\n'
                     'Test Arg2 description\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -221,7 +244,7 @@ class TestModuleDoc(unittest.TestCase):
                     '`String()` <br>\n'
                     'Test returns\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
@@ -247,7 +270,7 @@ class TestModuleDoc(unittest.TestCase):
                     '`Boolean` <br>\n'
                     'Test returns\n\n'
                     '## Examples\n\n'
-                    'Test example')
+                    'Test example\n\n')
 
         actual = method_parser.MethodParser().make(code, desc)[0].build()
         self.assertEqual(expected, actual)
