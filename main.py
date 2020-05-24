@@ -12,7 +12,7 @@ def get_modules(folder_path, excluded):
         base = os.path.basename(file)
         if base in excluded:
             continue
-        
+
         elif file.endswith(".bas"):
             f = open(folder_path + '\\' + file)
             output.append(f.read())
@@ -30,6 +30,17 @@ def delete_folder_content(folder_path):
                 shutil.rmtree(file_path)
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+def create_index(mods, descriptions):
+    content = '# Index\n\n'
+
+    for mod in mods:
+        ns = module_parser.ModuleParser().make(mod, descriptions).namespace
+        content += f'- [{ns}](.\{ns}\{ns}.md)\n'
+    
+    f = open(f'{dest}\\index.md', 'w+')
+    f.write(content)
+    f.close()
 
 
 if __name__ == "__main__":
@@ -50,6 +61,8 @@ if __name__ == "__main__":
         descriptions = json.load(f)
 
     docs = []
+
+    create_index(modules, descriptions)
 
     for mod in modules:
         mod_doc = module_parser.ModuleParser().make(mod, descriptions)
