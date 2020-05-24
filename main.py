@@ -6,10 +6,14 @@ import module_parser
 import method_parser
 
 
-def get_modules(folder_path):
+def get_modules(folder_path, excluded):
     output = []
     for file in os.listdir(folder_path):
-        if file.endswith(".bas"):
+        base = os.path.basename(file)
+        if base in excluded:
+            continue
+        
+        elif file.endswith(".bas"):
             f = open(folder_path + '\\' + file)
             output.append(f.read())
 
@@ -33,8 +37,9 @@ if __name__ == "__main__":
     src = sys.argv[1]
     dest = sys.argv[2]
     doc = sys.argv[3]
+    excluded = [x.strip() for x in sys.argv[4].split(',')]
 
-    modules = get_modules(src)
+    modules = get_modules(src, excluded)
     
     if os.path.exists(dest):
         delete_folder_content(dest)
