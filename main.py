@@ -36,7 +36,7 @@ def create_index(mods, descriptions):
 
     for mod in mods:
         ns = module_parser.ModuleParser().make(mod, descriptions).namespace
-        content += f'- [{ns}](.\{ns}\{ns}.md)\n'
+        content += f'- [{ns}](./{ns}/{ns}.md)\n'
     
     f = open(f'{dest}\\index.md', 'w+')
     f.write(content)
