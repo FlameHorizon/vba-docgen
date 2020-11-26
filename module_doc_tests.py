@@ -70,8 +70,8 @@ class TestModuleDoc(unittest.TestCase):
                     '# Methods\n\n'
                     '|Name|Description|\n'
                     '|-|-|\n'
-                    '|[Start ()](./Start.md)||\n'
-                    '|[Finish ()](./Finish.md)||\n')
+                    '|[Finish ()](./Finish.md)||\n'
+                    '|[Start ()](./Start.md)||\n')
 
         self.assertEqual(expected, doc.build())
 

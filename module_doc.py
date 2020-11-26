@@ -7,6 +7,9 @@ class ModuleDoc():
         self.description = description
 
     def build(self):
+        """Creates a representation of a module in Markdown format.
+        Note that methods, are ordered alphabetically."""
+
         output = ('# ' + self.namespace + ' module\n\n')
         if (self.description != ''):
             output = ('# ' + self.namespace + ' module\n\n' +
@@ -17,7 +20,7 @@ class ModuleDoc():
                        '|Name|Description|\n'
                        '|-|-|\n')
 
-            for name in self.methods:
+            for name in sorted(self.methods.keys()):
                 # No args defined for this method.
                 if self.methods[name][0] == '':
                     args = ''
