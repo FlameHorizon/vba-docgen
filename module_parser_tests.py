@@ -19,7 +19,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 ()](./Foo1.md)||\n'
                     '|[Foo2 ()](./Foo2.md)||\n')
         self.assertEqual(expected, parser.make(code).build())
@@ -38,7 +38,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 (String)](./Foo1.md)||\n'
                     '|[Foo2 (Date, String)](./Foo2.md)||\n'
                     '|[Foo3 (ParamArray Variant())](./Foo3.md)||\n'
@@ -56,7 +56,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 (String, String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
@@ -70,7 +70,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 (Long)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
@@ -84,7 +84,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 (String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
@@ -98,7 +98,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 (Operation)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
@@ -112,7 +112,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 (String)](./Foo1.md)||\n')
 
         parser = module_parser.ModuleParser()
@@ -142,7 +142,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo1 ()](./Foo1.md)|Foo1 description|\n'
                     '|[Foo2 (Boolean)](./Foo2.md)|Foo2 description|\n')
 
@@ -159,7 +159,7 @@ class TestModuleParser(unittest.TestCase):
         expected = ('# Foo module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Bar ()](./Bar.md)|Bar description|\n')
 
         parser = module_parser.ModuleParser()

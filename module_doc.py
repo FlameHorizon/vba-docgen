@@ -18,7 +18,7 @@ class ModuleDoc():
         if len(self.methods) > 0:
             output += ('# Methods\n\n'
                        '|Name|Description|\n'
-                       '|-|-|\n')
+                       '|---|---|\n')
 
             for name in sorted(self.methods.keys()):
                 # No args defined for this method.

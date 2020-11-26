@@ -29,7 +29,7 @@ class TestModuleDoc(unittest.TestCase):
         expected = ('# example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Start ()](./Start.md)||\n')
 
         actual = doc.build()
@@ -42,7 +42,7 @@ class TestModuleDoc(unittest.TestCase):
         expected = ('# example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Start (String)](./Start.md)||\n')
 
         actual = doc.build()
@@ -55,7 +55,7 @@ class TestModuleDoc(unittest.TestCase):
         expected = ('# example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Start (String, Long)](./Start.md)||\n')
 
         actual = doc.build()
@@ -69,7 +69,7 @@ class TestModuleDoc(unittest.TestCase):
         expected = ('# example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Finish ()](./Finish.md)||\n'
                     '|[Start ()](./Start.md)||\n')
 
@@ -82,7 +82,7 @@ class TestModuleDoc(unittest.TestCase):
         expected = ('# example module\n\n'
                     '# Methods\n\n'
                     '|Name|Description|\n'
-                    '|-|-|\n'
+                    '|---|---|\n'
                     '|[Foo ()](./Foo.md)|This is example method description|\n')
 
         self.assertEqual(expected, doc.build())
