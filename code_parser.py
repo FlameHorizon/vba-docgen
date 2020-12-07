@@ -37,7 +37,7 @@ def get_args(ln):
 
 
 def __remove_defaults(ln):
-    return re.sub(r' = (\"\w*\"|\w*\.\w*|\"\W*\"|\w*)', '', ln)
+    return re.sub(r' = -?(\"\w*\"|\w*\.\w*|\"\W*\"|\w*)', '', ln)
 
 
 def __no_args(open_parentheses, close_parentheses):

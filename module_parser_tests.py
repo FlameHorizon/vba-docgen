@@ -118,6 +118,22 @@ class TestModuleParser(unittest.TestCase):
         parser = module_parser.ModuleParser()
         self.assertEqual(expected, parser.make(code).build())
 
+    def test_MakeReturnsMethodWithArgsAndDefaultAndLineContinuations(self):
+        code = ('Attribute VB_Name = \"Example\"\n'
+                'Public Sub Foo1(ByVal Bar1 As String, _\n'
+                '                ByVal Bar2 As Long, _\n'
+                '                Optional ByVal Bar3 As Long = -1)\n'
+                'End Sub')
+
+        expected = ('# Example module\n\n'
+                    '# Methods\n\n'
+                    '|Name|Description|\n'
+                    '|---|---|\n'
+                    '|[Foo1 (String, Long, Long)](./Foo1.md)||\n')
+
+        parser = module_parser.ModuleParser()
+        self.assertEqual(expected, parser.make(code).build())
+
     def test_MakeReturnsModuleWithDescription(self):
         code = ('Attribute VB_Name = \"Example\"')
 
